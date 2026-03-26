@@ -242,7 +242,7 @@ kpi(k2, "Pobreza monetaria máx.", "43.1", "%", "2020 — COVID-19",            
 kpi(k3, "Pobreza extrema máx.",   "17.3", "%", "2020 — COVID-19",            C_EXT)
 kpi(k4, "Caída PIB",              "−7.2", "%", "2020 — mayor contracción",   C_PIB)
 kpi(k5, "Inflación máxima",       "11.7", "%", "2023 — pico post-pandemia",  C_INF)
-kpi(k6, "Gini más alto",          "55.1", "",  "2021 — desigualdad pico",    C_GIN)
+kpi(k6, "Gini más alto",          "55.1", "%",  "2021 — desigualdad pico",    C_GIN)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
