@@ -207,7 +207,7 @@ st.markdown("""
 <div class="intro-box">
     <div class="intro-label">🔍 Pregunta guía</div>
     <div class="intro-pregunta">
-        ¿Cómo se comportaron los indicadores macro y de desempleo en el país pos y pre pandemia,
+        ¿Cómo se comportaron los indicadores macro y de desempleo en el país post y pre pandemia,
         en los periodos comprendidos entre 2018 y 2022?
     </div>
     <hr style="border:none; border-top:1px solid #D6EAF8; margin:0.9rem 0;">
