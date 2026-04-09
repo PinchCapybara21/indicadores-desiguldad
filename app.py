@@ -205,11 +205,30 @@ st.markdown("""
     <hr style="border:none; border-top:1px solid #D6EAF8; margin:0.9rem 0;">
     <div class="intro-label">📄 Introducción</div>
     <div class="intro-text">
-        Entre 2018 y 2022, la economía colombiana atravesó un periodo de transformaciones
-        significativas marcado por el impacto de la pandemia del COVID-19 y el posterior
-        proceso de recuperación económica. Estos cambios no solo afectaron el crecimiento
-        del país, sino también las condiciones sociales, evidenciando dinámicas importantes
-        en términos de desigualdad e informalidad laboral.
+        Entre 2017 y 2023, Colombia experimentó un periodo de alta volatilidad económica y social, marcado no solo 
+        por el choque de la pandemia del COVID-19, sino también por cambios en el contexto político y en la 
+        orientación de la política económica. Durante el gobierno de Juan Manuel Santos (hasta 2018), la economía 
+        venía de un proceso de ajuste tras la caída de los precios del petróleo, con un crecimiento moderado y 
+        avances graduales en reducción de pobreza. Posteriormente, bajo la administración de Iván Duque, el país 
+        mantuvo estabilidad macroeconómica, pero enfrentó retos estructurales como el alto desempleo, la informalidad 
+        y el descontento social reflejado en protestas como el paro nacional de 2019.
+        <br><br>
+        El año 2020 marcó un punto de quiebre con la llegada del COVID-19, que obligó a implementar confinamientos 
+        estrictos y medidas de emergencia económica. Esto provocó una fuerte contracción del PIB, un aumento histórico 
+        del desempleo y un deterioro significativo en los niveles de pobreza. Para mitigar estos efectos, el gobierno 
+        implementó políticas como transferencias monetarias (Ingreso Solidario), subsidios al empleo (PAEF) y ampliación 
+        de programas sociales existentes. Sin embargo, el impacto fue desigual entre sectores y grupos poblacionales.
+        <br><br>
+        En el periodo pospandemia (2021–2023), Colombia vivió una recuperación económica impulsada por la reapertura, aunque 
+        acompañada de tensiones sociales (como el paro nacional de 2021) y presiones inflacionarias. En 2022 se da un cambio 
+        político relevante con la llegada al poder de Gustavo Petro, lo que implicó un giro en la agenda económica hacia reformas 
+        estructurales enfocadas en equidad social, mercado laboral y sistema tributario.
+        <br><br>
+        En este contexto, el comportamiento de los principales indicadores macroeconómicos, el desempleo y la pobreza entre 2017 
+        y 2023 no puede entenderse de manera aislada, sino como el resultado de la interacción entre choques externos, decisiones 
+        de política pública y cambios en el entorno político. Analizar su evolución en los periodos pre y pospandemia permite 
+        identificar tanto la magnitud del impacto de la crisis como las fortalezas y limitaciones del proceso de recuperación 
+        económica y social del país.
         <br><br>
         En este boletín se analizan cinco indicadores clave: el <strong>Producto Interno
         Bruto (PIB)</strong>, la <strong>inflación</strong>, el <strong>coeficiente de
@@ -725,24 +744,17 @@ st.markdown("""
 <div class="conclusion-box">
     <h3>La informalidad como factor estructural de la desigualdad colombiana</h3>
     <p>
-    La alta informalidad en Colombia no es solo un problema laboral, sino un factor estructural
-    que limita la productividad del país. Actualmente, alrededor del <strong>55,7% de los
-    trabajadores son informales</strong> según el DANE, y en zonas rurales esta cifra alcanza
-    hasta <strong>83,1%</strong>, lo que evidencia una economía donde más de la mitad de la
-    fuerza laboral opera fuera de condiciones formales.
-    <br><br>
-    Esta situación impacta directamente la productividad porque la informalidad está asociada
-    a unidades productivas pequeñas, con baja inversión, escaso acceso a crédito y limitada
-    incorporación de tecnología. De hecho, el propio DANE muestra que la informalidad
-    empresarial alcanza niveles de hasta <strong>90,2% en ciertos sectores</strong>,
-    especialmente en actividades de baja productividad como agricultura, transporte y comercio.
-    <br><br>
-    Además, el crecimiento del empleo en Colombia no ha resuelto este problema: el
-    <strong>59% de los nuevos empleos creados son informales</strong>, lo que indica que el
-    mercado laboral está generando ocupación, pero no empleo productivo ni de calidad. Esto
-    perpetúa un ciclo donde el crecimiento económico no se traduce en mejoras reales en las
-    condiciones de vida de la mayoría de la población, manteniendo los altos niveles de
-    desigualdad que caracterizan al país a lo largo del periodo analizado.
+    Los datos muestran que la desigualdad en Colombia es un problema estructural y no un 
+    episodio aislado. Se evidencia que el mayor deterioro ocurrió en 2020 y 2021, cuando el 
+    PIB cayó fuertemente, el desempleo llegó a 17,6%, la pobreza monetaria alcanzó 43,1%, la 
+    pobreza extrema 17,3% y el Gini 55,1%. Aunque en 2023 hubo una recuperación del PIB de 0,6% 
+    y una reducción parcial de algunos indicadores, la pobreza monetaria todavía fue de 34,6%, la 
+    pobreza extrema de 12,6% y el desempleo de 10,2%, lo que demuestra que el crecimiento no se 
+    traduce automáticamente en bienestar. Además, la desigualdad territorial sigue siendo muy marcada, 
+    pues en 2023 la pobreza monetaria fue de 44,0% en centros poblados y rural disperso frente a 31,8% 
+    en cabeceras, y la pobreza extrema fue de 22,0% frente a 9,8%. En consecuencia, la pregunta central 
+    se responde señalando que la pobreza, la exclusión y la desigualdad persisten porque el crecimiento 
+    económico no ha sido suficientemente inclusivo ni ha corregido las brechas regionales y laborales.
     </p>
 </div>
 """, unsafe_allow_html=True)
