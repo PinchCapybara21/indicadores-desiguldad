@@ -744,6 +744,19 @@ st.markdown("""
 <div class="conclusion-box">
     <h3>La informalidad como factor estructural de la desigualdad colombiana</h3>
     <p>
+    La alta informalidad en Colombia no es solo un problema laboral, sino un factor estructural que limita 
+    la productividad del país. Actualmente, alrededor del 55,7% de los trabajadores son informales según el DANE, 
+    y en zonas rurales esta cifra alcanza hasta 83,1%, lo que evidencia una economía donde más de la mitad de la 
+    fuerza laboral opera fuera de condiciones formales.
+</div>
+    Esta situación impacta directamente la productividad porque la informalidad está asociada a unidades productivas 
+    pequeñas, con baja inversión, escaso acceso a crédito y limitada incorporación de tecnología. De hecho, el propio 
+    DANE muestra que la informalidad empresarial alcanza niveles de hasta 90,2% en ciertos sectores, especialmente en actividades 
+    de baja productividad como agricultura, transporte y comercio.
+ </div>   
+    Además, el crecimiento del empleo en Colombia no ha resuelto este problema: el 59% de los nuevos empleos creados son informales, 
+    lo que indica que el mercado laboral está generando ocupación, pero no empleo productivo ni de calidad.
+</div> 
     Los datos muestran que la desigualdad en Colombia es un problema estructural y no un 
     episodio aislado. Se evidencia que el mayor deterioro ocurrió en 2020 y 2021, cuando el 
     PIB cayó fuertemente, el desempleo llegó a 17,6%, la pobreza monetaria alcanzó 43,1%, la 
