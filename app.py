@@ -101,20 +101,16 @@ PATH_GIN = os.path.join(BASE_DIR, "data", "gini.csv")
 
 @st.cache_data
 def load_data():
-    # ── Desempleo ── sin cambios respecto al codigo original
     df_d = pd.read_csv(PATH_DES, index_col=0)
     df_d.columns = ANOS
     tgp = [float(v) for v in df_d.loc["Tasa Global de Participación (TGP)"].tolist()]
     to_ = [float(v) for v in df_d.loc["Tasa de Ocupación (TO)"].tolist()]
     tdd = [float(v) for v in df_d.loc["Tasa de Desocupación (TD)"].tolist()]
 
-    # ── Pobreza ── sin cambios respecto al codigo original
     df_p = pd.read_csv(PATH_POB, header=None)
     mon_nac = df_p.iloc[1, 1:8].astype(float).tolist()
     ext_nac = df_p.iloc[6, 1:8].astype(float).tolist()
 
-    # ── PIB ──
-    # Formato real: separador ";" | BOM utf-8 | coma decimal  →  2017;1,4
     df_pib = pd.read_csv(PATH_PIB, sep=";", encoding="utf-8-sig", header=0)
     df_pib.columns = ["ano", "valor"]
     df_pib["valor"] = (
@@ -123,21 +119,17 @@ def load_data():
         .str.replace(",", ".", regex=False)
         .astype(float)
     )
-    pib = df_pib["valor"].tolist()   # 7 valores: 2017-2023
+    pib = df_pib["valor"].tolist()
 
-    # ── Inflacion ──
-    # Formato real: separador ";" | BOM utf-8 | punto decimal  →  2017;4.3
     df_inf = pd.read_csv(PATH_INF, sep=";", encoding="utf-8-sig", header=0)
     df_inf.columns = ["ano", "valor"]
     df_inf["valor"] = df_inf["valor"].astype(float)
-    inf = df_inf["valor"].tolist()   # 7 valores: 2017-2023
+    inf = df_inf["valor"].tolist()
 
-    # ── Gini ──
-    # Formato real: separador "," | sin BOM | punto decimal | encabezado "ano,valor"
     df_gin = pd.read_csv(PATH_GIN, sep=",", header=0)
     df_gin.columns = ["ano", "valor"]
     df_gin["valor"] = df_gin["valor"].astype(float)
-    gin = df_gin["valor"].tolist()   # 7 valores: 2017-2023
+    gin = df_gin["valor"].tolist()
 
     return tgp, to_, tdd, mon_nac, ext_nac, pib, inf, gin
 
@@ -189,13 +181,13 @@ def kpi(col, label, value, unit, sub, color):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# ENCABEZADO
+# ENCABEZADO — título clickbait + subtítulo con el periodo real
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown("""
 <div class="header-box">
-    <h1>&#128202; Cien Años de Desigualdad &mdash; Colombia 2017&ndash;2023</h1>
-    <p>Boletin de indicadores Colombia. Seminario de Desigualdad, Exclusion y Pobreza &nbsp;&middot;&nbsp;
-       Nivel Nacional &nbsp;&middot;&nbsp;
+    <h1>&#128202; Cien Años de Desigualdad</h1>
+    <p>Análisis de indicadores macroeconómicos y sociales &mdash; Colombia 2017&ndash;2023
+       &nbsp;&middot;&nbsp; Nivel Nacional &nbsp;&middot;&nbsp;
        Fuente: DANE · Banco de la República · Banco Mundial</p>
 </div>
 """, unsafe_allow_html=True)
@@ -207,8 +199,8 @@ st.markdown("""
 <div class="intro-box">
     <div class="intro-label">🔍 Pregunta guía</div>
     <div class="intro-pregunta">
-        ¿Cómo se comportaron los indicadores macro y de desempleo en el país post y pre pandemia,
-        en los periodos comprendidos entre 2018 y 2022?
+        ¿Cómo se comportaron los indicadores macro, el desempleo y la pobreza en Colombia post y pre pandemia,
+        en los periodos comprendidos entre 2017 y 2023?
     </div>
     <hr style="border:none; border-top:1px solid #D6EAF8; margin:0.9rem 0;">
     <div class="intro-label">📄 Introducción</div>
@@ -233,18 +225,7 @@ st.markdown("""
 # ══════════════════════════════════════════════════════════════════════════════
 # KPIs
 # ══════════════════════════════════════════════════════════════════════════════
-st.markdown('<p class="section-title">📍 Valores clave del periodo</p>',
-            unsafe_allow_html=True)
 
-k1, k2, k3, k4, k5, k6 = st.columns(6)
-kpi(k1, "Desempleo máximo",       "17.6", "%", "2021 — post-COVID",          C_DES)
-kpi(k2, "Pobreza monetaria máx.", "43.1", "%", "2020 — COVID-19",            C_POB)
-kpi(k3, "Pobreza extrema máx.",   "17.3", "%", "2020 — COVID-19",            C_EXT)
-kpi(k4, "Caída PIB",              "−7.2", "%", "2020 — mayor contracción",   C_PIB)
-kpi(k5, "Inflación máxima",       "11.7", "%", "2023 — pico post-pandemia",  C_INF)
-kpi(k6, "Gini más alto",          "55.1", "%",  "2021 — desigualdad pico",    C_GIN)
-
-st.markdown("<br>", unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TABS
@@ -298,13 +279,18 @@ with tab1:
 
     st.markdown("""
     <div class="analysis-box">
-    <strong>Análisis:</strong> La Tasa de Desocupación (TD) mostró una tendencia al alza moderada
-    entre 2017 (12,0%) y 2019 (13,1%), antes del choque externo. En <strong>2020–2021</strong>
-    el desempleo alcanzó su pico de <strong>17,6%</strong>, producto del cierre de actividades
-    durante la pandemia de COVID-19. La recuperación fue gradual: 14,6% en 2022 y 13,7% en 2023,
-    sin retornar a niveles pre-pandemia, evidenciando <strong>cicatrices estructurales</strong>
-    en sectores de turismo, comercio e informalidad. La caída en la TGP (2020–2021) refleja el
-    efecto del trabajador desalentado: personas que dejaron de buscar empleo activamente.
+    <strong>Análisis:</strong> En el mercado laboral nacional colombiano entre 2017 y 2023, los indicadores
+                mostraron estabilidad prepandemia con una tasa de desempleo que osciló entre el 12,0 % (2017)}
+                y el 13,1 % (2019), mientras la tasa global de participación (TGP) se mantuvo cerca del 65-67 % 
+                y la de ocupación (TO) alrededor del 57-58 %, reflejando un equilibrio frágil en una economía
+                con alto componente informal. La pandemia de COVID-19, con las estrictas cuarentenas decretadas 
+                en 2020 que paralizaron micronegocios y sectores como comercio y servicios —donde más de 500 mil 
+                establecimientos cerraron temporalmente—, provocó un leve repunte inicial al 13,5 % en 2020 que se 
+                agravó en 2021 hasta el pico histórico reciente del 17,6 %, afectando especialmente a mujeres, jóvenes 
+                y trabajadores por cuenta propia. La reactivación económica postpandemia, impulsada por la reapertura y 
+                el crecimiento en alojamiento, transporte y comercio, permitió una recuperación gradual: el desempleo 
+                bajó a 14,6 % en 2022 y 13,7 % en 2023, aunque sin recuperar plenamente los niveles de participación 
+                laboral prepandemia, evidenciando las vulnerabilidades estructurales del empleo en Colombia.
     </div>
     <div class="note-box">
     <strong>Nota metodológica:</strong> La TD excluye trabajadores desalentados y subempleados,
@@ -320,17 +306,16 @@ with tab2:
         st.markdown('<p class="section-title">Pobreza Monetaria Nacional (%)</p>',
                     unsafe_allow_html=True)
         fig_mon = go.Figure()
-        fig_mon.add_trace(go.Bar(
-            x=ANOS, y=mon_nac, name="Pobreza monetaria (%)",
-            marker_color=C_POB, opacity=0.85,
-            text=[f"{v:.1f}%" for v in mon_nac],
-            textposition="outside",
-            hovertemplate="<b>%{x}</b> %{y:.1f}%<extra></extra>",
-        ))
         fig_mon.add_trace(go.Scatter(
-            x=ANOS, y=mon_nac, mode="lines+markers",
-            name="Tendencia", line=dict(color="#922B21", width=2, dash="dot"),
-            marker=dict(size=7),
+            x=ANOS, y=mon_nac,
+            name="Pobreza monetaria (%)",
+            mode="lines+markers+text",
+            line=dict(color=C_POB, width=3),
+            marker=dict(size=9, symbol="circle"),
+            text=[f"{v:.1f}%" for v in mon_nac],
+            textposition="top center",
+            textfont=dict(size=10, color=C_POB),
+            fill="tozeroy", fillcolor="rgba(211,84,0,0.07)",
             hovertemplate="<b>%{x}</b> %{y:.1f}%<extra></extra>",
         ))
         fig_mon = covid_band(fig_mon)
@@ -344,17 +329,16 @@ with tab2:
         st.markdown('<p class="section-title">Pobreza Extrema Nacional (%)</p>',
                     unsafe_allow_html=True)
         fig_ext = go.Figure()
-        fig_ext.add_trace(go.Bar(
-            x=ANOS, y=ext_nac, name="Pobreza extrema (%)",
-            marker_color=C_EXT, opacity=0.9,
-            text=[f"{v:.1f}%" for v in ext_nac],
-            textposition="outside",
-            hovertemplate="<b>%{x}</b> %{y:.1f}%<extra></extra>",
-        ))
         fig_ext.add_trace(go.Scatter(
-            x=ANOS, y=ext_nac, mode="lines+markers",
-            name="Tendencia", line=dict(color=C_POB, width=2, dash="dot"),
-            marker=dict(size=7),
+            x=ANOS, y=ext_nac,
+            name="Pobreza extrema (%)",
+            mode="lines+markers+text",
+            line=dict(color=C_EXT, width=3),
+            marker=dict(size=9, symbol="circle"),
+            text=[f"{v:.1f}%" for v in ext_nac],
+            textposition="top center",
+            textfont=dict(size=10, color=C_POB),
+            fill="tozeroy", fillcolor="rgba(240,178,122,0.15)",
             hovertemplate="<b>%{x}</b> %{y:.1f}%<extra></extra>",
         ))
         fig_ext = covid_band(fig_ext)
@@ -366,14 +350,19 @@ with tab2:
 
     st.markdown("""
     <div class="analysis-box">
-    <strong>Análisis:</strong> La pobreza monetaria nacional se mantuvo relativamente estable
-    en torno a 35–36% entre 2017 y 2019, antes de dar un salto dramático a
-    <strong>43,1%</strong> en 2020, equivalente a aproximadamente <strong>21 millones de
-    personas</strong> por debajo de la línea de pobreza. Este aumento está vinculado a la
-    pérdida de ingresos laborales durante la pandemia, que afectó desproporcionadamente a
-    trabajadores informales (~47% de la fuerza laboral). La pobreza extrema pasó de 12,0%
-    (2019) a <strong>17,3%</strong> (2020). La recuperación parcial en 2021–2023 es atribuible
-    a la reactivación económica y programas de transferencias como Ingreso Solidario.
+    <strong>Análisis:</strong> La pobreza monetaria y extrema en Colombia entre 
+                2017 y 2023 reflejó avances modestos prepandemia —con tasas monetarias 
+                de 35,5 % (2018) a 36,5 % (2019) y extrema de 10,4 % (2018) a 12,0 % (2019)—, 
+                pero la crisis del COVID-19 generó un choque severo: los confinamientos 
+                estrictos de 2020 provocaron pérdida masiva de ingresos en hogares informales 
+                y rurales, elevando la pobreza monetaria al 43,1 % y la extrema al 17,3 %, cifras 
+                que golpearon con mayor fuerza a mujeres, jóvenes, indígenas y afrocolombianos 
+                de bajos ingresos. Gracias a las transferencias monetarias del Gobierno (como Ingreso Solidario) 
+                y la gradual reactivación económica, se logró una recuperación sostenida: la monetaria 
+                descendió a 39,7 % (2021), 36,6 % (2022) y 34 % (2023), mientras la extrema cayó a 
+                13,7 % (2021), 13,8 % (2022) y 12 % (2023). Aunque se evitó un deterioro mayor, los 
+                niveles siguen por encima de algunos prepandemia, destacando la persistente desigualdad 
+                estructural que el país enfrenta pese a la resiliencia mostrada en la pospandemia.
     </div>
     """, unsafe_allow_html=True)
 
@@ -382,26 +371,24 @@ with tab3:
     st.markdown('<p class="section-title">Crecimiento del PIB — Colombia 2017-2023 (%)</p>',
                 unsafe_allow_html=True)
 
-    colores_pib = [C_PIB if v >= 0 else "#E74C3C" for v in pib]
-
     fig_pib = go.Figure()
-    fig_pib.add_trace(go.Bar(
-        x=ANOS, y=pib,
-        name="Crecimiento PIB (%)",
-        marker_color=colores_pib,
-        opacity=0.88,
-        text=[f"{v:+.1f}%" for v in pib],
-        textposition="outside",
-        hovertemplate="<b>%{x}</b> PIB: %{y:+.1f}%<extra></extra>",
-    ))
     fig_pib.add_hline(y=0, line_color="#1C2833", line_width=1.2)
     fig_pib.add_trace(go.Scatter(
         x=ANOS, y=pib,
-        name="Tendencia",
-        mode="lines+markers",
-        line=dict(color="#F39C12", width=2.2, dash="dot"),
-        marker=dict(size=8),
-        hovertemplate="<b>%{x}</b> %{y:+.1f}%<extra></extra>",
+        name="Crecimiento PIB (%)",
+        mode="lines+markers+text",
+        line=dict(color=C_PIB, width=3),
+        marker=dict(
+            size=10,
+            symbol="circle",
+            color=[C_PIB if v >= 0 else "#E74C3C" for v in pib],
+            line=dict(width=2, color="white"),
+        ),
+        text=[f"{v:+.1f}%" for v in pib],
+        textposition="top center",
+        textfont=dict(size=10, color=C_PIB),
+        fill="tozeroy", fillcolor="rgba(26,82,118,0.07)",
+        hovertemplate="<b>%{x}</b> PIB: %{y:+.1f}%<extra></extra>",
     ))
     fig_pib = covid_band(fig_pib)
     fig_pib = base_layout(
@@ -515,12 +502,7 @@ with tab5:
             text=[f"{v:.1f}" for v in gin],
             textposition="top center",
             textfont=dict(size=10, color=C_GIN),
-            hovertemplate="<b>%{x}</b> Gini: %{y:.1f}<extra></extra>",
-        ))
-        fig_gin.add_trace(go.Bar(
-            x=ANOS, y=gin,
-            name="Gini (barras)",
-            marker_color=C_GIN, opacity=0.15,
+            fill="tozeroy", fillcolor="rgba(17,122,101,0.07)",
             hovertemplate="<b>%{x}</b> Gini: %{y:.1f}<extra></extra>",
         ))
         fig_gin = covid_band(fig_gin)
@@ -552,15 +534,17 @@ with tab5:
 
     st.markdown("""
     <div class="analysis-box">
-    <strong>Análisis:</strong> Colombia se mantiene como uno de los países más desiguales de
-    América Latina y del mundo. El coeficiente de Gini superó el umbral de <strong>50</strong>
-    durante todo el periodo analizado, ubicándola en la categoría de <em>alta desigualdad</em>
-    según estándares internacionales. El pico se registró en <strong>2021 (55,1)</strong>,
-    cuando la recuperación económica post-COVID benefició principalmente a los hogares de
-    mayores ingresos. El año 2020 registró un Gini de 53,5, reflejando que la crisis golpeó
-    de manera desproporcionada a los hogares más vulnerables. La leve reducción observada en
-    2022–2023 (54,8 y 53,9) no es suficiente para cambiar el patrón estructural: la brecha
-    entre los deciles más ricos y más pobres sigue siendo una de las más amplias del continente.
+    <strong>Análisis:</strong> Entre 2017 y 2019, el leve aumento de la desigualdad 
+                se explica por un crecimiento económico moderado que no logró mejorar 
+                significativamente los ingresos de los hogares más vulnerables.Además, la alta 
+                informalidad laboral limitó una distribución más equitativa del ingreso.En 2020, 
+                la pandemia generó un choque negativo sin precedentes, afectando principalmente a 
+                trabajadores informales y sectores como comercio y servicios. Esto provocó una fuerte 
+                pérdida de empleo e ingresos en los hogares más pobres.Como resultado, la desigualdad 
+                aumentó significativamente, alcanzando su punto máximo en 2021.Aunque en ese año hubo 
+                recuperación del PIB, el empleo se recuperó de forma más lenta y desigual.Desde 2022, 
+                el Gini empieza a disminuir levemente gracias a la reactivación económica. 
+                También influyeron las transferencias sociales y el aumento del salario mínimo.
     </div>
     <div class="note-box">
     <strong>Nota metodológica:</strong> El coeficiente de Gini varía de 0 (igualdad perfecta)
@@ -594,10 +578,14 @@ with tab6:
         hovertemplate="TD: %{y:.1f}%<extra></extra>",
     ), row=1, col=1)
 
-    colores_pib2 = [C_PIB if v >= 0 else "#E74C3C" for v in pib]
-    fig_all.add_trace(go.Bar(
+    fig_all.add_trace(go.Scatter(
         x=ANOS, y=pib, name="PIB (%)",
-        marker_color=colores_pib2, opacity=0.85,
+        mode="lines+markers",
+        line=dict(color=C_PIB, width=2.5),
+        marker=dict(
+            size=8,
+            color=[C_PIB if v >= 0 else "#E74C3C" for v in pib],
+        ),
         hovertemplate="PIB: %{y:+.1f}%<extra></extra>",
     ), row=1, col=2)
 
@@ -731,53 +719,33 @@ with tab6:
 # CONCLUSIONES
 # ══════════════════════════════════════════════════════════════════════════════
 st.markdown("<br>", unsafe_allow_html=True)
-st.markdown('<p class="section-title">📝 Conclusiones</p>', unsafe_allow_html=True)
+st.markdown('<p class="section-title">📝 Conclusión</p>', unsafe_allow_html=True)
 
-c1, c2 = st.columns(2)
-
-with c1:
-    st.markdown("""
-    <div class="conclusion-box">
-        <h3>1. El COVID-19 como punto de quiebre</h3>
-        <p>El año 2020 representó el mayor choque económico y social del periodo analizado.
-        El PIB cayó un 7,2%, el desempleo superó el 17%, la pobreza monetaria llegó al 43,1%
-        y la pobreza extrema al 17,3%. Ningún indicador logró retornar completamente a sus
-        niveles pre-pandemia al cierre de 2023, evidenciando cicatrices estructurales
-        persistentes en el tejido productivo y social colombiano.</p>
-    </div>
-    <br>
-    <div class="conclusion-box">
-        <h3>2. Inflación y erosión del poder adquisitivo</h3>
-        <p>Los picos inflacionarios de 2022 (10,2%) y 2023 (11,7%) representaron una segunda
-        ola de impacto sobre los hogares vulnerables que ya venían deteriorados por la pandemia.
-        La inflación elevada golpea con mayor fuerza a quienes destinan mayor proporción de su
-        ingreso al consumo básico. La respuesta del Banco de la República, aunque técnicamente
-        necesaria, encareció el crédito y frenó la recuperación de la inversión y el empleo.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with c2:
-    st.markdown("""
-    <div class="conclusion-box">
-        <h3>3. Desigualdad estructural y límites del crecimiento</h3>
-        <p>El coeficiente de Gini, que superó 50 durante todo el periodo y alcanzó su pico en
-        2021 (55,1), confirma que Colombia no ha logrado traducir el crecimiento económico en
-        una distribución más equitativa del ingreso. La recuperación de 2021 (PIB +10,8%) no
-        generó reducciones significativas en la desigualdad, poniendo de manifiesto que el
-        crecimiento sin políticas redistributivas activas tiende a favorecer a los sectores de
-        mayor capital físico y humano.</p>
-    </div>
-    <br>
-    <div class="conclusion-box">
-        <h3>4. Recomendaciones de política pública</h3>
-        <p>Los hallazgos sugieren la necesidad de: (i) fortalecer los sistemas de protección
-        social para reducir la exposición a choques externos; (ii) promover la formalización
-        laboral para ampliar la base de cotizantes; (iii) mantener una política fiscal
-        contracíclica que sostenga transferencias en periodos de crisis; y (iv) diseñar
-        políticas de control inflacionario con enfoque distributivo que protejan a los hogares
-        más vulnerables.</p>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown("""
+<div class="conclusion-box">
+    <h3>La informalidad como factor estructural de la desigualdad colombiana</h3>
+    <p>
+    La alta informalidad en Colombia no es solo un problema laboral, sino un factor estructural
+    que limita la productividad del país. Actualmente, alrededor del <strong>55,7% de los
+    trabajadores son informales</strong> según el DANE, y en zonas rurales esta cifra alcanza
+    hasta <strong>83,1%</strong>, lo que evidencia una economía donde más de la mitad de la
+    fuerza laboral opera fuera de condiciones formales.
+    <br><br>
+    Esta situación impacta directamente la productividad porque la informalidad está asociada
+    a unidades productivas pequeñas, con baja inversión, escaso acceso a crédito y limitada
+    incorporación de tecnología. De hecho, el propio DANE muestra que la informalidad
+    empresarial alcanza niveles de hasta <strong>90,2% en ciertos sectores</strong>,
+    especialmente en actividades de baja productividad como agricultura, transporte y comercio.
+    <br><br>
+    Además, el crecimiento del empleo en Colombia no ha resuelto este problema: el
+    <strong>59% de los nuevos empleos creados son informales</strong>, lo que indica que el
+    mercado laboral está generando ocupación, pero no empleo productivo ni de calidad. Esto
+    perpetúa un ciclo donde el crecimiento económico no se traduce en mejoras reales en las
+    condiciones de vida de la mayoría de la población, manteniendo los altos niveles de
+    desigualdad que caracterizan al país a lo largo del periodo analizado.
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # FOOTER / FUENTES
