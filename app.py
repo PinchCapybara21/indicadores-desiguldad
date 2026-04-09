@@ -748,7 +748,6 @@ st.markdown("""
     la productividad del país. Actualmente, alrededor del 55,7% de los trabajadores son informales según el DANE, 
     y en zonas rurales esta cifra alcanza hasta 83,1%, lo que evidencia una economía donde más de la mitad de la 
     fuerza laboral opera fuera de condiciones formales.
-    </div>
     Esta situación impacta directamente la productividad porque la informalidad está asociada a unidades productivas 
     pequeñas, con baja inversión, escaso acceso a crédito y limitada incorporación de tecnología. De hecho, el propio 
     DANE muestra que la informalidad empresarial alcanza niveles de hasta 90,2% en ciertos sectores, especialmente en actividades 
